@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dlq1rnu5i2tsc"]
+
+[ext_resource type="Script" path="res://piece.gd" id="1_hdhe1"]
+[ext_resource type="Texture2D" uid="uid://dhyynqplhejcm" path="res://Assets/white_pawn.png" id="1_nnef4"]
+[ext_resource type="Script" path="res://White_or_Black_Piece.gd" id="2_noylc"]
+[ext_resource type="Script" path="res://Moves.gd" id="3_5vwb8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duaka"]
+size = Vector2(18, 18)
+
+[sub_resource type="Environment" id="Environment_3587t"]
+background_mode = 3
+glow_enabled = true
+
+[node name="Piece" type="Node2D"]
+script = ExtResource("1_hdhe1")
+
+[node name="White_or_Black_Piece" type="Sprite2D" parent="."]
+texture = ExtResource("1_nnef4")
+script = ExtResource("2_noylc")
+
+[node name="Moves" type="Node2D" parent="."]
+script = ExtResource("3_5vwb8")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_duaka")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3587t")
+
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]

@@ -15,3 +15,5 @@ script = ExtResource("2_dae2d")
 [node name="Turn" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.588235)
 z_index = -10
+
+[node name="Camera2D" type="Camera2D" parent="."]
