@@ -12,7 +12,7 @@ func _ready():
 	board.append([1, 1, 1, 1, 1, 1, 1, 1])
 	board.append([null, null, null, null, null, null, null, null])
 	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
+	board.append([4, 2, 3, 5, 6, 3, 2, 4])
 	board.append([null, null, null, null, null, null, null, null])
 	board.append([-1, -1, -1, -1, -1, -1, -1, -1])
 	board.append([-4, -2, -3, -5, -6, -3, -2, -4])

@@ -5,6 +5,8 @@ extends Node2D
 func _ready():
 	for i in range (0,1):
 		print(i)
+	for i in range (1,0):
+		print(i)
 	pass # Replace with function body.
 
 
