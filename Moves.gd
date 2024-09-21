@@ -88,6 +88,7 @@ func calculate_available_moves(self_position):
 #Helper functions
 func check_squares(start_position, end_position, direction, self_position):
 	var movable_squares = []
+	end_position += 1
 	
 	if direction == "vertical":
 		for y_coord in range(start_position, end_position):
