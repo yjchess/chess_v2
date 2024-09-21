@@ -38,8 +38,8 @@ func calculate_available_moves(self_position):
 	
 	#vertical check
 	if vertical_movement_range != 0:
-		var vertical_positive_extreme = max(self_position.y + vertical_movement_range, 7)
-		var vertical_negative_extreme = min(self_position.y - vertical_movement_range, 0)
+		var vertical_positive_extreme = min(self_position.y + vertical_movement_range, 7)
+		var vertical_negative_extreme = max(self_position.y - vertical_movement_range, 0)
 	
 		if self_position.y != 7: 
 			var available_squares = check_squares(self_position.y+1, vertical_positive_extreme, "vertical", self_position)
