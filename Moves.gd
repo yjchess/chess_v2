@@ -78,19 +78,16 @@ func calculate_available_moves(self_position):
 			for square in available_squares:
 				movable_squares.append(square)
 		
-		var diagonal_descending_negative_extreme = min(7, self_position.x - diagonal_movement_range) #top left
-		var diagonal_descending_positive_extreme = max(0, self_position.x + diagonal_movement_range) #bottom right
+		var diagonal_descending_negative_extreme = max(0, self_position.x - diagonal_movement_range) #top left
+		var diagonal_descending_positive_extreme = min(7, self_position.x + diagonal_movement_range) #bottom right
 		
 		if self_position.y != 0: 
-			print(diagonal_descending_negative_extreme)
-			var available_squares = check_squares(self_position.x-1, diagonal_descending_negative_extreme+1, -1, "diagonal_left_up", self_position)
-			print (available_squares)
+			var available_squares = check_squares(self_position.x-1, diagonal_descending_negative_extreme-1, -1, "diagonal_left_up", self_position)
 			for square in available_squares:
 				movable_squares.append(square)
 
 		if self_position.y != 7: 
-			var available_squares = check_squares(self_position.x+1, diagonal_descending_positive_extreme-1, 1, "diagonal_left_up", self_position)
-			print (available_squares)
+			var available_squares = check_squares(self_position.x+1, diagonal_descending_positive_extreme+1, 1, "diagonal_left_up", self_position)
 			for square in available_squares:
 				movable_squares.append(square)
 	
@@ -137,7 +134,7 @@ func check_squares(start_position, end_position, step, direction, self_position)
 			y_increment -= step
 			
 			if self_position.y + y_increment > 7 || self_position.y + y_increment < 0: break
-			if x_coord > 7 || x_coord < 0: break
+			#if x_coord > 7 || x_coord < 0: break
 			
 			if    board.is_empty(board.get_square(x_coord, self_position.y + y_increment)): movable_squares.append([x_coord, self_position.y + y_increment])
 			elif  board.is_enemy(piece.type, board.get_square(x_coord, self_position.y + y_increment)): movable_squares.append([x_coord, self_position.y + y_increment]); break
