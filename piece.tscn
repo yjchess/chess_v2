@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dlq1rnu5i2tsc"]
+[gd_scene load_steps=8 format=3 uid="uid://dlq1rnu5i2tsc"]
 
 [ext_resource type="Script" path="res://piece.gd" id="1_hdhe1"]
 [ext_resource type="Texture2D" uid="uid://dhyynqplhejcm" path="res://Assets/white_pawn.png" id="1_nnef4"]
 [ext_resource type="Script" path="res://White_or_Black_Piece.gd" id="2_noylc"]
 [ext_resource type="Script" path="res://Moves.gd" id="3_5vwb8"]
+[ext_resource type="Script" path="res://Special_Moves.gd" id="5_bh6wk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_duaka"]
 size = Vector2(18, 18)
@@ -21,6 +22,9 @@ script = ExtResource("2_noylc")
 
 [node name="Moves" type="Node2D" parent="."]
 script = ExtResource("3_5vwb8")
+
+[node name="Special_Moves" type="Node" parent="Moves"]
+script = ExtResource("5_bh6wk")
 
 [node name="Area2D" type="Area2D" parent="."]
 

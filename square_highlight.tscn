@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://da4fk72pdd6us"]
+
+[ext_resource type="Script" path="res://square_highlight.gd" id="1_6b4n4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p80ht"]
+bg_color = Color(0, 0.6, 0.6, 0.254902)
+
+[node name="square_highlight" type="Node2D" groups=["highlight"]]
+script = ExtResource("1_6b4n4")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -18.0
+offset_right = 18.0
+grow_vertical = 0
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_p80ht")

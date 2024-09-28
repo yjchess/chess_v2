@@ -5,18 +5,23 @@ const CELL_WIDTH = 18
 const BOARD_SIZE = 8
 #var Piece = preload("res://piece.tscn").instantiate()
 @onready var pieces = $Pieces
+var displaying_highlights = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	board.append([4, 2, 3, 5, 6, 3, 2, 4])
-	board.append([1, 1, 1, 1, 1, 1, 1, 1])
 	board.append([null, null, null, null, null, null, null, null])
 	board.append([null, null, null, null, null, null, null, null])
-	board.append([4, 2, 3, 5, 6, 3, 2, 4])
 	board.append([null, null, null, null, null, null, null, null])
-	board.append([-1, -1, -1, -1, -1, -1, -1, -1])
-	board.append([-4, -2, -3, -5, -6, -3, -2, -4])
+	board.append([null, null, null, null, null, null, null, null])
+	board.append([null, null, null, null, null, null, null, null])
+	board.append([null, null, null, null, null, null, null, null])
+	board.append([null, null, null, null, null, null, null, null])
+	board.append([null, null, null, null, null, null, null, null])
+	#board.append([-1, -1, -1, -1, -1, -1, -1, -1])
+	#board.append([-4, -2, -3, -5, -6, -3, -2, -4])
 	
+	create_randomised_start(board, "white")
+	create_randomised_start(board, "black")
 	setup_board()
 
 func setup_board():
@@ -71,3 +76,136 @@ func is_enemy(self_type, type_to_check):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+func display_available_moves(available_moves):
+
+	for move in available_moves:
+		display_available_move(move)
+		
+		
+func display_available_move(move):
+	var highlighted_square_scene = preload("res://square_highlight.tscn")
+	var instance = highlighted_square_scene.instantiate()
+	instance.x_coord = move[0]
+	instance.y_coord = -move[1]
+	add_child(instance)
+
+
+func create_randomised_start(board, colour):
+	var points_total = 0
+	var empty_spots = []
+	var filled_spots = []
+	var piece_colour
+	
+	if colour == "white":
+		piece_colour = 1
+		for i in range(0, 3):
+			for j in range (0,8):
+				empty_spots.append([i,j])
+		
+		#add the king
+		empty_spots.remove_at(4)
+		filled_spots.append([0,4,6])
+	
+	else:
+		piece_colour = -1
+		for i in range(5,8):
+			for j in range (0,8):
+				empty_spots.append([i,j])
+		
+		#add the king
+		empty_spots.remove_at(19)
+		filled_spots.append([7,4,-6])
+	
+	#print(empty_spots)
+	
+	
+	#filled_spots.append([x_coord, y_coord, piece_type])
+	#print(empty_spots)
+	
+	var rng = RandomNumberGenerator.new()	
+	
+	#place queen on a random square:
+	var queen_square = rng.randi_range(0, len(empty_spots)-1)
+	var queen_array = empty_spots[queen_square]
+	queen_array.append(5*piece_colour)
+	filled_spots.append(queen_array)
+	points_total += 9
+	#print(len(empty_spots))
+	empty_spots.remove_at(queen_square)
+	#print(len(empty_spots))
+		
+	while points_total < 35:
+		#print(empty_spots)
+		var piece
+		var index = rng.randi_range(0, len(empty_spots)-1)
+		if empty_spots[index][0] == 0:
+			piece = rng.randi_range(2, 4) * piece_colour
+		else:
+			#give the pawn a 50 percent chance to be spawned
+			var pawn_spawn = rng.randi_range(0,1)
+			if pawn_spawn == 1:
+				piece = 1*piece_colour
+			else:
+				piece = rng.randi_range(2, 4) * piece_colour
+		
+		var piece_array = empty_spots[index]
+		piece_array.append(piece)
+		filled_spots.append(piece_array)
+		empty_spots.remove_at(index)
+
+		
+		match piece:
+			+1: points_total += 1
+			-1: points_total += 1
+			
+			+2: points_total += 3
+			-2: points_total += 3
+			
+			+3: points_total += 3
+			-3: points_total += 3
+			
+			+4: points_total += 5
+			-4: points_total += 5
+			
+			+5: points_total += 9
+			-5: points_total += 9
+	
+	while points_total < 40:
+		if len(empty_spots) == 0:
+			print(filled_spots)
+		print(len(empty_spots))
+		var piece
+		match points_total:
+			39: piece = 1 * piece_colour
+			38: piece = 1 * piece_colour
+			37: piece = rng.randi_range(1,3) * piece_colour
+			36: piece = rng.randi_range(1,3) * piece_colour
+			35: piece = rng.randi_range(1,4) * piece_colour
+		
+		var index = rng.randi_range(0, len(empty_spots)-1)		
+		var piece_array = empty_spots[index]
+		piece_array.append(piece)
+		filled_spots.append(piece_array)
+		empty_spots.remove_at(index)
+		
+		match piece:
+			+1: points_total += 1
+			-1: points_total += 1
+			
+			+2: points_total += 3
+			-2: points_total += 3
+			
+			+3: points_total += 3
+			-3: points_total += 3
+			
+			+4: points_total += 5
+			-4: points_total += 5
+		
+	#print(filled_spots)
+	#print(empty_spots)
+	#print(points_total)
+	
+	for piece in filled_spots:
+		board[piece[0]][piece[1]] = piece[2]
+		print(board)

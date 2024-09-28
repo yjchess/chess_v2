@@ -1,16 +1,15 @@
 extends Node2D
 
+@export var x_coord: int
+@export var y_coord: int
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#for i in range (0,1):
-	#	print(i)
-	#for i in range (1,0):
-	#	print(i)
-	
-	var array = [0]
-	for i in range (0, len(array)):
-		print(array[i])
+	set_as_top_level(true)
+	global_position = Vector2(x_coord*18, y_coord*18)
+	pass # Replace with function body.
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

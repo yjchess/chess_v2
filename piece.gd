@@ -8,6 +8,7 @@ var y_coord: int
 const CELL_WIDTH = 18
 const BOARD_SIZE = 8
 @onready var Moves_Node = $Moves
+@onready var board = get_parent().get_parent()
 
 static func new_piece(type:String, x_coord:int, y_coord:int):
 	var texture
@@ -76,6 +77,5 @@ func _on_area_2d_mouse_exited():
 
 func _on_area_2d_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		print("Mouse clicked")
-		print(Moves_Node.calculate_available_moves(Vector2(x_coord, y_coord)))
-	pass # Replace with function body.
+		var available_moves = Moves_Node.calculate_available_moves(Vector2(x_coord, y_coord))
+		board.display_available_moves(available_moves)

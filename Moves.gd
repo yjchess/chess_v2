@@ -3,6 +3,9 @@ extends Node2D
 @export_range(0,7,1) var horizontal_movement_range = 0
 @export_range(0,7,1) var vertical_movement_range = 0
 @export_range(0,7,1) var diagonal_movement_range = 0
+var special_moves = false
+@onready var special_piece = get_child(0)
+
 @onready var board = get_parent().get_parent().get_parent()
 @onready var piece = get_parent()
 
@@ -14,20 +17,28 @@ func _ready():
 	if "bishop" in piece.type || "queen" in piece.type:
 		diagonal_movement_range = 7
 		
-	if "pawn" in piece.type || "king" in piece.type:
-		vertical_movement_range = 1
+	if "pawn" in piece.type || "knight" in piece.type:
+		special_moves = true
 	
 	if "king" in piece.type:
 		diagonal_movement_range = 1
 		horizontal_movement_range = 1
-
+		vertical_movement_range = 1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
 
-func calculate_available_moves(self_position):
+func calculate_available_moves(self_position):		
+		
 	var movable_squares = []
+	
+	if special_moves == true:
+		print("Special Moves")
+		movable_squares = special_piece.calculate_available_moves(piece.type, self_position)
+		print("Done")
+		return movable_squares
+	
 	#print(self_position.x, horizontal_movement_range)
 	#horizontal check
 	if horizontal_movement_range != 0:
