@@ -81,14 +81,15 @@ func _on_area_2d_mouse_exited():
 func _on_area_2d_input_event(viewport, event, shape_idx):
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		var available_moves = Moves_Node.calculate_available_moves(Vector2(x_coord, y_coord))
-		if len(available_moves) > 0:
-			if board.displaying_highlights == false:
-				display_available_moves(available_moves)
-				board.displaying_highlights = true
-			else:
-				get_tree().call_group("highlight", "queue_free")
-				board.displaying_highlights = false
+		if type_num > 0 && GameStats.player == "white" && GameStats.turn == "white" || type_num <0 && GameStats.player == "black" && GameStats.turn =="black":
+			var available_moves = Moves_Node.calculate_available_moves(Vector2(x_coord, y_coord))
+			if len(available_moves) > 0:
+				if board.displaying_highlights == false:
+					display_available_moves(available_moves)
+					board.displaying_highlights = true
+				else:
+					get_tree().call_group("highlight", "queue_free")
+					board.displaying_highlights = false
 
 func move(new_x, new_y):
 	print(board.get_square(x_coord, y_coord))
