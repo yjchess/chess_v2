@@ -34,9 +34,7 @@ func calculate_available_moves(self_position):
 	var movable_squares = []
 	
 	if special_moves == true:
-		print("Special Moves")
 		movable_squares = special_piece.calculate_available_moves(piece.type, self_position)
-		print("Done")
 		return movable_squares
 	
 	#print(self_position.x, horizontal_movement_range)

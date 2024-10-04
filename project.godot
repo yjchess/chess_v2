@@ -14,6 +14,10 @@ config/name="Chess Version 2.0"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameStats="*res://singleton/game_stats.gd"
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

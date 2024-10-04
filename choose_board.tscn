@@ -1,0 +1,221 @@
+[gd_scene load_steps=5 format=3 uid="uid://dkq7p87ky5sqr"]
+
+[ext_resource type="PackedScene" uid="uid://dhttmky1wunfc" path="res://board.tscn" id="1_uagbt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tp8rc"]
+bg_color = Color(0.352941, 0.121569, 0.0392157, 0.392157)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.180392, 0.121569, 0.101961, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqmx1"]
+size = Vector2(145, 144)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bshx7"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+
+[node name="Choose_Board" type="Control"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = -0.505
+anchor_right = 0.5
+anchor_bottom = -0.505
+offset_top = 0.23999
+offset_bottom = 0.23999
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -126.0
+offset_right = 500.0
+offset_bottom = 126.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Panel" type="Panel" parent="HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_tp8rc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -500.0
+offset_top = -76.0
+offset_right = 500.0
+offset_bottom = 76.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Control" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Board" parent="HBoxContainer/Control" instance=ExtResource("1_uagbt")]
+position = Vector2(0, 0)
+
+[node name="Area2D" type="Area2D" parent="HBoxContainer/Control/Board"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/Control/Board/Area2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_uqmx1")
+
+[node name="Panel" type="Panel" parent="HBoxContainer/Control/Board"]
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 76.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bshx7")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Control/Board/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]?[/center]"
+
+[node name="Control2" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Board" parent="HBoxContainer/Control2" instance=ExtResource("1_uagbt")]
+position = Vector2(0, 0)
+
+[node name="Area2D" type="Area2D" parent="HBoxContainer/Control2/Board"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/Control2/Board/Area2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_uqmx1")
+
+[node name="Panel" type="Panel" parent="HBoxContainer/Control2/Board"]
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 76.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bshx7")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Control2/Board/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]?[/center]"
+
+[node name="Control3" type="Control" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="Board" parent="HBoxContainer/Control3" instance=ExtResource("1_uagbt")]
+position = Vector2(0, 0)
+
+[node name="Area2D" type="Area2D" parent="HBoxContainer/Control3/Board"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HBoxContainer/Control3/Board/Area2D"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_uqmx1")
+
+[node name="Panel" type="Panel" parent="HBoxContainer/Control3/Board"]
+offset_left = -75.0
+offset_top = -75.0
+offset_right = 76.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bshx7")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/Control3/Board/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+bbcode_enabled = true
+text = "[center]?[/center]"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -228.0
+offset_right = 144.0
+offset_bottom = -188.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0.501961, 0.231373, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/normal_font_size = 21
+theme_override_font_sizes/bold_font_size = 21
+bbcode_enabled = true
+text = "[b][color=\"dark_red\"]Pick your starting Position![/color][/b]"
+
+[connection signal="input_event" from="HBoxContainer/Control/Board/Area2D" to="HBoxContainer/Control/Board" method="select_board"]
+[connection signal="mouse_entered" from="HBoxContainer/Control/Board/Area2D" to="HBoxContainer/Control/Board" method="enlarge_board"]
+[connection signal="mouse_exited" from="HBoxContainer/Control/Board/Area2D" to="HBoxContainer/Control/Board" method="normalize_board"]
+[connection signal="input_event" from="HBoxContainer/Control2/Board/Area2D" to="HBoxContainer/Control2/Board" method="select_board"]
+[connection signal="mouse_entered" from="HBoxContainer/Control2/Board/Area2D" to="HBoxContainer/Control2/Board" method="enlarge_board"]
+[connection signal="mouse_exited" from="HBoxContainer/Control2/Board/Area2D" to="HBoxContainer/Control2/Board" method="normalize_board"]
+[connection signal="input_event" from="HBoxContainer/Control3/Board/Area2D" to="HBoxContainer/Control3/Board" method="select_board"]
+[connection signal="mouse_entered" from="HBoxContainer/Control3/Board/Area2D" to="HBoxContainer/Control3/Board" method="enlarge_board"]
+[connection signal="mouse_exited" from="HBoxContainer/Control3/Board/Area2D" to="HBoxContainer/Control3/Board" method="normalize_board"]

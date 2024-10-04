@@ -21,7 +21,7 @@ func calculate_available_moves(piece_type, position):
 		if piece_type =="black_pawn": direction = -1
 		
 		check_squares.append([position.x, position.y+direction]) 
-		if first_move:
+		if first_move && board.is_empty(board.get_square(position.x, position.y+direction)):
 			check_squares.append([position.x, position.y+2*direction])
 		
 		check_attack_squares.append([position.x-1, position.y+direction])

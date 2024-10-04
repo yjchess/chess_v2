@@ -6,22 +6,28 @@ const BOARD_SIZE = 8
 #var Piece = preload("res://piece.tscn").instantiate()
 @onready var pieces = $Pieces
 var displaying_highlights = false
+var turn = "white"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
-	board.append([null, null, null, null, null, null, null, null])
-	#board.append([-1, -1, -1, -1, -1, -1, -1, -1])
-	#board.append([-4, -2, -3, -5, -6, -3, -2, -4])
+	if GameStats.load_board == true:
+		board = GameStats.current_board
+		GameStats.load_board = false
+	else:
+		board.append([null, null, null, null, null, null, null, null])
+		board.append([null, null, null, null, null, null, null, null])
+		board.append([null, null, null, null, null, null, null, null])
+		board.append([null, null, null, null, null, null, null, null])
+		board.append([null, null, null, null, null, null, null, null])
+		board.append([null, null, null, null, null, null, null, null])
+		board.append([null, null, null, null, null, null, null, null])
+		board.append([null, null, null, null, null, null, null, null])
+		#board.append([-1, -1, -1, -1, -1, -1, -1, -1])
+		#board.append([-4, -2, -3, -5, -6, -3, -2, -4])
 	
-	create_randomised_start(board, "white")
-	create_randomised_start(board, "black")
+		create_randomised_start(board, "white")
+		create_randomised_start(board, "black")
+	
 	setup_board()
 
 func setup_board():
@@ -29,30 +35,30 @@ func setup_board():
 		for x in BOARD_SIZE:
 			match(board[y][x]):
 				
-				+1: create_piece("pawn",         x, y)
-				-1: create_piece("black_pawn",   x, y)
+				+1: create_piece("pawn",         x, y, +1)
+				-1: create_piece("black_pawn",   x, y, -1)
 				
-				+4: create_piece("rook",         x, y)
-				-4: create_piece("black_rook",   x, y)
+				+4: create_piece("rook",         x, y, +4)
+				-4: create_piece("black_rook",   x, y, -4)
 				
-				+2: create_piece("knight",       x, y)
-				-2: create_piece("black_knight", x, y)
+				+2: create_piece("knight",       x, y, +2)
+				-2: create_piece("black_knight", x, y, -2)
 				
-				+3: create_piece("bishop",       x, y)
-				-3: create_piece("black_bishop", x, y)
+				+3: create_piece("bishop",       x, y, +3)
+				-3: create_piece("black_bishop", x, y, -3)
 				
-				+5: create_piece("queen",        x, y)
-				-5: create_piece("black_queen",  x, y)
+				+5: create_piece("queen",        x, y, +5)
+				-5: create_piece("black_queen",  x, y, -5)
 
-				+6: create_piece("king",         x, y)
-				-6: create_piece("black_king",   x, y)
+				+6: create_piece("king",         x, y, +6)
+				-6: create_piece("black_king",   x, y, -6)
 	
 	#print(board)
 				
-func create_piece(piece_name, x, y):
-	var piece = Piece.new_piece(piece_name, x, y)
+func create_piece(piece_name, x, y, piece_num):
+	var piece = Piece.new_piece(piece_name, x, y, piece_num)
 	pieces.add_child(piece)
-	board[y][x] = piece
+	#board[y][x] = piece
 	#holder.global_position = Vector2(x * CELL_WIDTH + (CELL_WIDTH / 2), -y * CELL_WIDTH - (CELL_WIDTH / 2))
 	
 func get_square(x, y):
@@ -68,7 +74,7 @@ func is_empty(value):
 func is_enemy(self_type, type_to_check):
 	
 	if type_to_check != null:
-		if "black" in type_to_check.type && "black" in self_type || "black" not in type_to_check.type && "black" not in self_type:
+		if type_to_check < 0 && "black" in self_type || type_to_check > 0 && "black" not in self_type:
 			return false
 		else:
 			return true
@@ -114,7 +120,7 @@ func create_randomised_start(board, colour):
 				empty_spots.append([i,j])
 		
 		#add the king
-		empty_spots.remove_at(19)
+		empty_spots.remove_at(20)
 		filled_spots.append([7,4,-6])
 	
 	#print(empty_spots)
@@ -172,9 +178,9 @@ func create_randomised_start(board, colour):
 			-5: points_total += 9
 	
 	while points_total < 40:
-		if len(empty_spots) == 0:
-			print(filled_spots)
-		print(len(empty_spots))
+		#if len(empty_spots) == 0:
+		#	print(filled_spots)
+		#print(len(empty_spots))
 		var piece
 		match points_total:
 			39: piece = 1 * piece_colour
@@ -208,4 +214,18 @@ func create_randomised_start(board, colour):
 	
 	for piece in filled_spots:
 		board[piece[0]][piece[1]] = piece[2]
-		print(board)
+
+func enlarge_board():
+	scale.x = 1.5
+	scale.y = 1.5
+
+func normalize_board():
+	scale.x = 1
+	scale.y = 1
+
+func select_board(viewport, event, shape_idx):
+	
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		GameStats.current_board = board
+		GameStats.load_board = true
+		get_tree().change_scene_to_file("res://main.tscn")
