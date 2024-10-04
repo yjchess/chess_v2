@@ -91,11 +91,13 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 				board.displaying_highlights = false
 
 func move(new_x, new_y):
+	print(board.get_square(x_coord, y_coord))
 	get_tree().call_group("highlight", "queue_free")
 	board.displaying_highlights = false
+	board.move(x_coord, y_coord, new_x, new_y)
 	x_coord = new_x
 	y_coord = new_y
-	global_position = Vector2(x_coord * CELL_WIDTH + (CELL_WIDTH / 2), y_coord * CELL_WIDTH - (CELL_WIDTH / 2))
+	global_position = Vector2(x_coord * CELL_WIDTH + (CELL_WIDTH / 2), -y_coord * CELL_WIDTH - (CELL_WIDTH / 2))
 	#global_position -= Vector2(72,-72)
 	
 func display_available_moves(available_moves):
@@ -108,5 +110,5 @@ func display_available_move(move):
 	var highlighted_square_scene = preload("res://square_highlight.tscn")
 	var instance = highlighted_square_scene.instantiate()
 	instance.x_coord = move[0]
-	instance.y_coord = -move[1]
+	instance.y_coord = move[1]
 	add_child(instance)

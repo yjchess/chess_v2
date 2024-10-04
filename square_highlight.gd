@@ -9,7 +9,7 @@ extends Node2D
 func _ready():
 	#print(parent_piece)
 	set_as_top_level(true)
-	global_position = Vector2(x_coord*18, y_coord*18)
+	global_position = Vector2(x_coord*18, -y_coord*18)
 	pass # Replace with function body.
 
 

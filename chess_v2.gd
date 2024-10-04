@@ -229,3 +229,18 @@ func select_board(viewport, event, shape_idx):
 		GameStats.current_board = board
 		GameStats.load_board = true
 		get_tree().change_scene_to_file("res://main.tscn")
+
+
+func move(old_x, old_y, new_x, new_y):
+	
+	var selected_piece = board[old_x][old_y]
+	print(old_x, old_y, new_x, new_y)
+	for piece in pieces.get_children():
+		if piece.x_coord == new_x && piece.y_coord == new_y:
+			piece.queue_free()
+			
+	board[new_x][new_y] = selected_piece
+	board[old_x][old_y] = null
+	
+
+	

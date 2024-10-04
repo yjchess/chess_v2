@@ -2,8 +2,10 @@ extends Node
 
 var current_board = []
 var load_board = false
+
 var turn = "white"
 var player = "white"
+
 var white_checked = false
 var black_checked = false
 var white_checkmated = false
