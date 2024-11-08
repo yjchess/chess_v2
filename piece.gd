@@ -113,3 +113,6 @@ func display_available_move(move):
 	instance.x_coord = move[0]
 	instance.y_coord = move[1]
 	add_child(instance)
+	
+func calculate_available_moves():
+	return Moves_Node.calculate_available_moves(Vector2(x_coord, y_coord))

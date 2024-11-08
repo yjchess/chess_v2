@@ -1,17 +1,5 @@
 extends Node
 
-var board
-var current_board = []
-var load_board = false
-
-var turn = "white"
-var player = "white"
-
-var white_checked = false
-var black_checked = false
-var white_checkmated = false
-var black_checkmated = false
-var stalemate = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,3 +9,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func choose_move(color, board_state):
+	return

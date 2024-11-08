@@ -5,6 +5,7 @@ const CELL_WIDTH = 18
 const BOARD_SIZE = 8
 #var Piece = preload("res://piece.tscn").instantiate()
 @onready var pieces = $Pieces
+@onready var AI = $AI
 var displaying_highlights = false
 var turn = "white"
 
@@ -242,5 +243,102 @@ func move(old_x, old_y, new_x, new_y):
 	board[new_x][new_y] = selected_piece
 	board[old_x][old_y] = null
 	
-
+	GameStats.board = board
+	if   GameStats.turn == "white": GameStats.turn = "black"
+	elif GameStats.turn == "black": GameStats.turn = "white"
 	
+	if check_checkmate(GameStats.turn) == true:
+		pass
+	
+	if check_stalemate() == true:
+		pass
+
+	if GameStats.player == "white" && GameStats.turn == "black" || GameStats.player == "black" && GameStats.turn =="white":
+		AI.choose_move(GameStats.turn, board)
+	
+func check_stalemate():
+	var possible_moves = []
+	if GameStats.turn=="black":
+		possible_moves = check_available_moves("black")
+	else:
+		possible_moves = check_available_moves("white")
+	
+	if len(possible_moves) > 0:
+		return false
+	else:
+		return true
+
+func check_available_moves(color):
+	var ai_pieces = []
+	var ai_possible_moves = []
+	
+	for piece in pieces.get_children():
+		if piece.type_num < 0 && color == "black" || piece.type_num > 0 && color == "white":
+			ai_pieces.append(piece)
+	
+	for piece in ai_pieces:
+		var possible_moves = piece.calculate_available_moves()
+		if len(possible_moves) == 1:
+			ai_possible_moves.append([piece, possible_moves[0]])
+		elif len(possible_moves) > 1:
+			for move in possible_moves:
+				ai_possible_moves.append([piece, move])
+	
+	return ai_possible_moves	
+		
+func check_checkmate(turn):
+	var legal_moves = []
+	if GameStats.turn == "black" && GameStats.black_checked || GameStats.turn == "white" && GameStats.white_checked:
+		var available_moves = []
+		available_moves = check_moves_for_color(GameStats.turn)
+		
+		for move in available_moves:
+			if is_legal(move):
+				legal_moves.append(move)
+		
+	if len(legal_moves) > 0: return false
+	else: return true
+	
+
+func check_moves_for_color(color):
+	var pieces_to_check = []
+	var check_moves = []
+	for piece in pieces:
+		if piece.num_type < 0 && color == "black" || piece.num_type > 0 && color == "white":
+			pieces_to_check.append(piece)
+			
+	for piece in pieces_to_check:
+		var available_moves = []
+		available_moves = piece.get_possible_mvoes()
+		for move in available_moves:
+			check_moves.append([piece,move])
+	
+	return check_moves
+
+func is_legal(move):
+	var virtual_board = board
+	var temp_board = board
+	move[0].virtual_move(move[1])
+	var next_turn_color
+	var king_position
+	
+	#If the move is from black - check that it does not leave the black king hanging
+	if move[0].num_type < 0:
+		next_turn_color = "white"
+		king_position = find_king("black")
+	else:
+		next_turn_color = "black"
+		king_position = find_king("white")
+	
+	var possible_moves = check_moves_for_color(next_turn_color)
+	for virtual_move in possible_moves:
+		if virtual_move[1] == king_position:
+			return false
+	return true
+
+func find_king(color):
+	var king_position
+	for piece in pieces:
+		if piece.num_type == -6 && color == "black" || piece.num_type==6 && color == "white":
+			king_position = [piece.x_coord, piece.y_coord]
+	return king_position
